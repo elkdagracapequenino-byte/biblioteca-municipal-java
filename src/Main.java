@@ -2,20 +2,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    // ==========================================
-    // CONFIGURAÇÃO
-    // ==========================================
-
     static final int MAX_LIVROS = 100;
     static final int MAX_UTILIZADORES = 100;
 
-
-    // ==========================================
-    // ENTRADA DE DADOS
-    // ==========================================
-
     static Scanner scanner = new Scanner(System.in);
-
 
     // ==========================================
     // DADOS DOS LIVROS
@@ -26,10 +16,7 @@ public class Main {
     static String[] autores = new String[MAX_LIVROS];
     static int[] anosPublicacao = new int[MAX_LIVROS];
     static int[] quantidades = new int[MAX_LIVROS];
-
-    // Número de vezes que cada livro foi emprestado
     static int[] totalEmprestimos = new int[MAX_LIVROS];
-
 
     // ==========================================
     // DADOS DOS UTILIZADORES
@@ -39,32 +26,20 @@ public class Main {
     static String[] nomesUtilizadores = new String[MAX_UTILIZADORES];
     static String[] contactosUtilizadores = new String[MAX_UTILIZADORES];
 
-
     // ==========================================
     // CONTADORES
     // ==========================================
 
     static int numeroLivros = 0;
     static int numeroUtilizadores = 0;
-
-    // Número total de empréstimos realizados
     static int numeroTotalEmprestimos = 0;
-
 
     // ==========================================
     // MATRIZ DE EMPRÉSTIMOS
     // ==========================================
-    //
-    // emprestimos[utilizador][livro]
-    //
-    // 0 = não possui o livro
-    // 1 = possui o livro
-    //
-    // ==========================================
 
     static int[][] emprestimos =
             new int[MAX_UTILIZADORES][MAX_LIVROS];
-
 
     // ==========================================
     // MÉTODO PRINCIPAL
@@ -75,7 +50,6 @@ public class Main {
         int opcao;
 
         do {
-
             mostrarMenu();
 
             opcao = lerInteiro("Escolha uma opção: ");
@@ -130,7 +104,6 @@ public class Main {
         scanner.close();
     }
 
-
     // ==========================================
     // MENU PRINCIPAL
     // ==========================================
@@ -153,7 +126,6 @@ public class Main {
         System.out.println("==========================================");
     }
 
-
     // ==========================================
     // REGISTO DE LIVROS
     // ==========================================
@@ -163,25 +135,19 @@ public class Main {
         System.out.println();
         System.out.println("========== REGISTO DE LIVRO ==========");
 
-        // Verificar se ainda existe espaço no array
         if (numeroLivros >= MAX_LIVROS) {
-
             System.out.println(
                     "Erro: o limite máximo de livros foi atingido."
             );
-
             return;
         }
 
         int id = lerInteiroPositivo("ID do livro: ");
 
-        // Verificar ID duplicado
         if (encontrarLivro(id) != -1) {
-
             System.out.println(
                     "Erro: já existe um livro com o ID " + id + "."
             );
-
             return;
         }
 
@@ -197,9 +163,6 @@ public class Main {
                 "Quantidade disponível: "
         );
 
-
-        // Guardar os dados nos arrays
-
         idLivros[numeroLivros] = id;
         titulos[numeroLivros] = titulo;
         autores[numeroLivros] = autor;
@@ -211,10 +174,8 @@ public class Main {
 
         System.out.println();
         System.out.println("Livro registado com sucesso!");
-    }
-
-
-    // ==========================================
+            }
+        // ==========================================
     // LISTAR CATÁLOGO
     // ==========================================
 
@@ -224,20 +185,16 @@ public class Main {
         System.out.println("========== CATÁLOGO DE LIVROS ==========");
 
         if (numeroLivros == 0) {
-
             System.out.println(
                     "Não existem livros registados."
             );
-
             return;
         }
 
         for (int i = 0; i < numeroLivros; i++) {
-
             mostrarDadosLivro(i);
         }
     }
-
 
     // ==========================================
     // PESQUISAR LIVRO
@@ -249,11 +206,9 @@ public class Main {
         System.out.println("========== PESQUISAR LIVRO ==========");
 
         if (numeroLivros == 0) {
-
             System.out.println(
                     "Não existem livros registados."
             );
-
             return;
         }
 
@@ -265,11 +220,9 @@ public class Main {
         );
 
         if (opcao != 1 && opcao != 2) {
-
             System.out.println(
                     "Erro: opção de pesquisa inválida."
             );
-
             return;
         }
 
@@ -278,7 +231,6 @@ public class Main {
         ).toLowerCase();
 
         boolean encontrado = false;
-
 
         for (int i = 0; i < numeroLivros; i++) {
 
@@ -297,7 +249,6 @@ public class Main {
                         .contains(termo);
             }
 
-
             if (corresponde) {
 
                 mostrarDadosLivro(i);
@@ -306,16 +257,13 @@ public class Main {
             }
         }
 
-
         if (!encontrado) {
-
-            System.out.println();
             System.out.println(
-                    "Nenhum livro encontrado para: " + termo
+                    "\nNenhum livro encontrado para: "
+                    + termo
             );
         }
     }
-
 
     // ==========================================
     // REGISTO DE UTILIZADOR
@@ -324,12 +272,15 @@ public class Main {
     public static void registarUtilizador() {
 
         System.out.println();
-        System.out.println("======= REGISTO DE UTILIZADOR =======");
+        System.out.println(
+                "======= REGISTO DE UTILIZADOR ======="
+        );
 
         if (numeroUtilizadores >= MAX_UTILIZADORES) {
 
             System.out.println(
-                    "Erro: o limite máximo de utilizadores foi atingido."
+                    "Erro: o limite máximo de utilizadores "
+                    + "foi atingido."
             );
 
             return;
@@ -338,9 +289,6 @@ public class Main {
         int id = lerInteiroPositivo(
                 "ID do utilizador: "
         );
-
-
-        // Verificar ID duplicado
 
         if (encontrarUtilizador(id) != -1) {
 
@@ -352,7 +300,6 @@ public class Main {
             return;
         }
 
-
         String nome = lerTextoNaoVazio(
                 "Nome: "
         );
@@ -361,22 +308,17 @@ public class Main {
                 "Contacto: "
         );
 
-
-        // Guardar dados
-
         idUtilizadores[numeroUtilizadores] = id;
         nomesUtilizadores[numeroUtilizadores] = nome;
         contactosUtilizadores[numeroUtilizadores] = contacto;
 
         numeroUtilizadores++;
 
-
         System.out.println();
         System.out.println(
                 "Utilizador registado com sucesso!"
         );
     }
-
 
     // ==========================================
     // LISTAR UTILIZADORES
@@ -385,6 +327,7 @@ public class Main {
     public static void listarUtilizadores() {
 
         System.out.println();
+
         System.out.println(
                 "========== LISTA DE UTILIZADORES =========="
         );
@@ -398,10 +341,10 @@ public class Main {
             return;
         }
 
-
         for (int i = 0; i < numeroUtilizadores; i++) {
 
             System.out.println();
+
             System.out.println(
                     "ID: " + idUtilizadores[i]
             );
@@ -418,22 +361,18 @@ public class Main {
                     "------------------------------------------"
             );
         }
-    }
-
-
-    // ==========================================
+        }
+        // ==========================================
     // EFECTUAR EMPRÉSTIMO
     // ==========================================
 
     public static void efectuarEmprestimo() {
 
         System.out.println();
+
         System.out.println(
                 "========== EFECTUAR EMPRÉSTIMO =========="
         );
-
-
-        // Verificar se existem livros
 
         if (numeroLivros == 0) {
 
@@ -444,9 +383,6 @@ public class Main {
             return;
         }
 
-
-        // Verificar se existem utilizadores
-
         if (numeroUtilizadores == 0) {
 
             System.out.println(
@@ -456,14 +392,12 @@ public class Main {
             return;
         }
 
-
         int idUtilizador = lerInteiroPositivo(
                 "ID do utilizador: "
         );
 
         int indiceUtilizador =
                 encontrarUtilizador(idUtilizador);
-
 
         if (indiceUtilizador == -1) {
 
@@ -474,14 +408,12 @@ public class Main {
             return;
         }
 
-
         int idLivro = lerInteiroPositivo(
                 "ID do livro: "
         );
 
         int indiceLivro =
                 encontrarLivro(idLivro);
-
 
         if (indiceLivro == -1) {
 
@@ -492,26 +424,18 @@ public class Main {
             return;
         }
 
-
-        // Verificar disponibilidade
-
         if (quantidades[indiceLivro] <= 0) {
 
-            System.out.println();
             System.out.println(
-                    "Erro: o livro não possui exemplares disponíveis."
+                    "Erro: o livro não possui exemplares "
+                    + "disponíveis."
             );
 
             return;
         }
 
-
-        // Verificar se o mesmo utilizador
-        // já possui esse livro
-
         if (emprestimos[indiceUtilizador][indiceLivro] == 1) {
 
-            System.out.println();
             System.out.println(
                     "Erro: este utilizador já possui "
                     + "este livro emprestado."
@@ -520,23 +444,17 @@ public class Main {
             return;
         }
 
-
-        // Registar o empréstimo
-
+        // Registar o empréstimo na matriz
         emprestimos[indiceUtilizador][indiceLivro] = 1;
 
         // Diminuir quantidade disponível
-
         quantidades[indiceLivro]--;
 
-        // Aumentar contador do livro
-
+        // Aumentar contador de empréstimos do livro
         totalEmprestimos[indiceLivro]++;
 
         // Aumentar contador geral
-
         numeroTotalEmprestimos++;
-
 
         System.out.println();
         System.out.println(
@@ -558,7 +476,6 @@ public class Main {
         );
     }
 
-
     // ==========================================
     // REGISTAR DEVOLUÇÃO
     // ==========================================
@@ -566,10 +483,10 @@ public class Main {
     public static void registarDevolucao() {
 
         System.out.println();
+
         System.out.println(
                 "========== REGISTAR DEVOLUÇÃO =========="
         );
-
 
         if (numeroLivros == 0) {
 
@@ -580,7 +497,6 @@ public class Main {
             return;
         }
 
-
         if (numeroUtilizadores == 0) {
 
             System.out.println(
@@ -590,14 +506,12 @@ public class Main {
             return;
         }
 
-
         int idUtilizador = lerInteiroPositivo(
                 "ID do utilizador: "
         );
 
         int indiceUtilizador =
                 encontrarUtilizador(idUtilizador);
-
 
         if (indiceUtilizador == -1) {
 
@@ -608,14 +522,12 @@ public class Main {
             return;
         }
 
-
         int idLivro = lerInteiroPositivo(
                 "ID do livro: "
         );
 
         int indiceLivro =
                 encontrarLivro(idLivro);
-
 
         if (indiceLivro == -1) {
 
@@ -626,13 +538,8 @@ public class Main {
             return;
         }
 
-
-        // Verificar se o utilizador possui
-        // realmente esse livro
-
         if (emprestimos[indiceUtilizador][indiceLivro] == 0) {
 
-            System.out.println();
             System.out.println(
                     "Erro: este utilizador não possui "
                     + "este livro emprestado."
@@ -641,15 +548,11 @@ public class Main {
             return;
         }
 
-
-        // Registar devolução
-
+        // Remover o empréstimo da matriz
         emprestimos[indiceUtilizador][indiceLivro] = 0;
 
-        // Aumentar quantidade disponível
-
+        // Devolver o exemplar ao catálogo
         quantidades[indiceLivro]++;
-
 
         System.out.println();
         System.out.println(
@@ -671,7 +574,6 @@ public class Main {
         );
     }
 
-
     // ==========================================
     // ESTATÍSTICAS
     // ==========================================
@@ -679,12 +581,10 @@ public class Main {
     public static void mostrarEstatisticas() {
 
         System.out.println();
+
         System.out.println(
                 "========== ESTATÍSTICAS =========="
         );
-
-
-        // Verificar livros
 
         if (numeroLivros == 0) {
 
@@ -695,16 +595,10 @@ public class Main {
             return;
         }
 
-
-        // Número total de livros registados
-
         System.out.println(
                 "Total de títulos registados: "
                 + numeroLivros
         );
-
-
-        // Calcular quantidade total disponível
 
         int totalDisponivel = 0;
 
@@ -713,22 +607,15 @@ public class Main {
             totalDisponivel += quantidades[i];
         }
 
-
         System.out.println(
                 "Total de exemplares disponíveis: "
                 + totalDisponivel
         );
 
-
-        // Total de empréstimos
-
         System.out.println(
                 "Total de empréstimos realizados: "
                 + numeroTotalEmprestimos
         );
-
-
-        // Livro mais emprestado
 
         int indiceMaisEmprestado = 0;
 
@@ -740,7 +627,6 @@ public class Main {
                 indiceMaisEmprestado = i;
             }
         }
-
 
         System.out.println();
 
@@ -759,14 +645,11 @@ public class Main {
                 + totalEmprestimos[indiceMaisEmprestado]
         );
 
-
         System.out.println(
                 "=================================="
         );
-    }
-
-
-    // ==========================================
+                }
+        // ==========================================
     // PROCURAR LIVRO PELO ID
     // ==========================================
 
@@ -782,7 +665,6 @@ public class Main {
 
         return -1;
     }
-
 
     // ==========================================
     // PROCURAR UTILIZADOR PELO ID
@@ -800,7 +682,6 @@ public class Main {
 
         return -1;
     }
-
 
     // ==========================================
     // MOSTRAR DADOS DE UM LIVRO
@@ -842,7 +723,6 @@ public class Main {
         );
     }
 
-
     // ==========================================
     // LER INTEIRO
     // ==========================================
@@ -853,7 +733,8 @@ public class Main {
 
             System.out.print(mensagem);
 
-            String entrada = scanner.nextLine().trim();
+            String entrada =
+                    scanner.nextLine().trim();
 
             try {
 
@@ -868,7 +749,6 @@ public class Main {
         }
     }
 
-
     // ==========================================
     // LER INTEIRO POSITIVO
     // ==========================================
@@ -879,4 +759,59 @@ public class Main {
 
             int valor = lerInteiro(mensagem);
 
- 
+            if (valor > 0) {
+
+                return valor;
+            }
+
+            System.out.println(
+                    "Erro: o valor deve ser maior que zero."
+            );
+        }
+    }
+
+    // ==========================================
+    // LER INTEIRO NÃO NEGATIVO
+    // ==========================================
+
+    public static int lerInteiroNaoNegativo(String mensagem) {
+
+        while (true) {
+
+            int valor = lerInteiro(mensagem);
+
+            if (valor >= 0) {
+
+                return valor;
+            }
+
+            System.out.println(
+                    "Erro: o valor não pode ser negativo."
+            );
+        }
+    }
+
+    // ==========================================
+    // LER TEXTO NÃO VAZIO
+    // ==========================================
+
+    public static String lerTextoNaoVazio(String mensagem) {
+
+        while (true) {
+
+            System.out.print(mensagem);
+
+            String texto =
+                    scanner.nextLine().trim();
+
+            if (!texto.isEmpty()) {
+
+                return texto;
+            }
+
+            System.out.println(
+                    "Erro: este campo não pode ficar vazio."
+            );
+        }
+    }
+            }
